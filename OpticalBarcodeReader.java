@@ -226,7 +226,10 @@ class BarcodeImage implements Cloneable {
    
 }
 
-/*class DataMatrix implements BarcodeIO {
+/*
+ * This class goes through the barcode and analyzes the information
+ */
+class DataMatrix implements BarcodeIO {
    public static final char BLACK_CHAR = '*';
    public static final char WHITE_CHAR = ' ';
    private BarcodeImage image;
@@ -234,7 +237,59 @@ class BarcodeImage implements Cloneable {
    private int actualWidth;
    private int actualHeight;
    
+   /*
+    * Default constructor for the matrix. All values set to basic values
+    */
    public DataMatrix() {
-      
+      actualWidth = 0;
+      actualHeight = 0;
+      text = "undefined";
+      // Fill image with blanks
+      for (int i = 0; i < image.MAX_HEIGHT; i++) {
+         for (int j = 0; j < image.MAX_WIDTH; j++) {
+            image.setPixel(i, j, false);
+         }
+      }
    }
-}*/
+   
+   /*
+    * Constructor where you receive an image but have no text
+    */
+   public DataMatrix(BarcodeImage image){
+      scan();
+      text = "undefined";
+   }
+   
+   /*
+    * Constructor where you receive a text but need to create an image
+    */
+   public DataMatrix(String text){
+      actualWidth = 0;
+      actualHeight = 0;
+      text = readText();
+      for (int i = 0; i < image.MAX_HEIGHT; i++) {
+         for (int j = 0; j < image.MAX_WIDTH; j++) {
+            image.setPixel(i, j, false);
+         }
+      }
+   }
+   
+   /*
+    * This method reads the input of text
+    */
+   public boolean readText(String text){
+      if(text == null){
+         return false;
+      }else
+         text = text; //not sure if this changes private text
+      return true;
+   }
+   
+   /*
+    * This method builds the private barcode
+    */
+   public boolean scan(BarcodeImage bc){
+      if
+   }
+   
+}
