@@ -9,92 +9,79 @@
 
 public class OpticalBarcodeReader {
 
-   public static void main(String[] args) {
-      String[] sImageIn = {
-            "* * * * * * * * * * * * * * * * * * * * * ",
-            "*                                       * ",
-            "****** **** ****** ******* ** *** *****   ",
-            "*     *    ****************************** ",
-            "* **    * *        **  *    * * *   *     ",
-            "*   *    *  *****    *   * *   *  **  *** ",
-            "*  **     * *** **   **  *    **  ***  *  ",
-            "***  * **   **  *   ****    *  *  ** * ** ",
-            "*****  ***  *  * *   ** ** **  *   * *    ",
-            "***************************************** "  
-         };      
-               
-         String[] sImageIn_2 = {
-               "                                          ",
-               "                                          ",
-               "* * * * * * * * * * * * * * * * * * *     ",
-               "*                                    *    ",
-               "**** *** **   ***** ****   *********      ",
-               "* ************ ************ **********    ",
-               "** *      *    *  * * *         * *       ",
-               "***   *  *           * **    *      **    ",
-               "* ** * *  *   * * * **  *   ***   ***     ",
-               "* *           **    *****  *   **   **    ",
-               "****  *  * *  * **  ** *   ** *  * *      ",
-               "**************************************    ",
-               "                                          ",
-               "                                          ",
-               "                                          ",
-               "                                          "
-         };
-         
-         String[] sImageIn_3 = {
-               "* * * * * * * * * * * * * * * * * *",
-               "*                                 *",
-               "***** ** * **** ****** ** **** **  ",  
-               "* **************      *************",
-               "**  *  *        *  *   *        *  ",  
-               "* **  *     **    * *   * ****   **",
-               "**         ****   * ** ** ***   ** ", 
-               "*   *  *   ***  *       *  ***   **",
-               "*  ** ** * ***  ***  *  *  *** *   ",   
-               "***********************************"
-         };
-        
-         // TODO: A lot of this doesn't really work without actualWidth and actualHeight being updated
-         BarcodeImage bc = new BarcodeImage(sImageIn_3);
-         
-         DataMatrix dm = new DataMatrix(bc);     
-        
-         // First secret message
-         System.out.println("----------------------------------------------");
-         dm.translateImageToText();
-         dm.displayTextToConsole();
-         dm.displayImageToConsole();
-         System.out.println("----------------------------------------------");
-         
-         // second secret message
-         
-         bc = new BarcodeImage(sImageIn_2);
-         dm.scan(bc);
-         dm.translateImageToText();
-         dm.displayTextToConsole();
-         dm.displayImageToConsole();
-         
-         dm.readText("Hello world!");
-         dm.generateImageFromText();
-         dm.displayTextToConsole();
-         dm.displayImageToConsole();
-         System.out.println("----------------------------------------------");
-         dm.translateImageToText();
-         dm.displayTextToConsole();
-         dm.generateImageFromText();
-         dm.displayTextToConsole();
-         dm.displayImageToConsole();
-         System.out.println("----------------------------------------------");
-         
-         
-         // create your own message
-         dm.readText("What a great resume builder this is!");
-         dm.generateImageFromText();
-         dm.displayTextToConsole();
-         dm.displayImageToConsole();
-         
-   }
+	public static void main(String[] args)
+	   {
+	      String[] sImageIn =
+	      {
+	         "                                               ",
+	         "                                               ",
+	         "                                               ",
+	         "     * * * * * * * * * * * * * * * * * * * * * ",
+	         "     *                                       * ",
+	         "     ****** **** ****** ******* ** *** *****   ",
+	         "     *     *    ****************************** ",
+	         "     * **    * *        **  *    * * *   *     ",
+	         "     *   *    *  *****    *   * *   *  **  *** ",
+	         "     *  **     * *** **   **  *    **  ***  *  ",
+	         "     ***  * **   **  *   ****    *  *  ** * ** ",
+	         "     *****  ***  *  * *   ** ** **  *   * *    ",
+	         "     ***************************************** ",  
+	         "                                               ",
+	         "                                               ",
+	         "                                               "
+
+	      };      
+	            
+	         
+	      
+	      String[] sImageIn_2 =
+	      {
+	            "                                          ",
+	            "                                          ",
+	            "* * * * * * * * * * * * * * * * * * *     ",
+	            "*                                    *    ",
+	            "**** *** **   ***** ****   *********      ",
+	            "* ************ ************ **********    ",
+	            "** *      *    *  * * *         * *       ",
+	            "***   *  *           * **    *      **    ",
+	            "* ** * *  *   * * * **  *   ***   ***     ",
+	            "* *           **    *****  *   **   **    ",
+	            "****  *  * *  * **  ** *   ** *  * *      ",
+	            "**************************************    ",
+	            "                                          ",
+	            "                                          ",
+	            "                                          ",
+	            "                                          "
+
+	      };
+	     
+	      BarcodeImage bc = new BarcodeImage(sImageIn);
+	      DataMatrix dm = new DataMatrix(bc);
+	     
+	      // First secret message
+	      System.out.println("========================================\nFIRST SECRET MESSAGE:");
+	      dm.translateImageToText();
+	      dm.displayTextToConsole();
+	      System.out.println("\nBarcode Image: \n");
+	      dm.displayImageToConsole();
+	      
+	      // second secret message
+	      System.out.println("\n========================================\nSECOND SECRET MESSAGE:");
+	      bc = new BarcodeImage(sImageIn_2);
+	      dm.scan(bc);
+	      dm.translateImageToText();
+	      dm.displayTextToConsole();
+	      System.out.println("\nBarcode Image: \n");
+	      dm.displayImageToConsole();
+	      
+	      // create your own message
+	      System.out.println("\n========================================\nTHIRD SECRET MESSAGE:");
+	      dm.readText("What a great resume builder this is!");
+	      dm.generateImageFromText();
+	      dm.displayTextToConsole();
+	      System.out.println("\nBarcode Image: \n");
+	      dm.displayImageToConsole();
+	   }   
 }
 
 /**
@@ -215,14 +202,16 @@ class BarcodeImage implements Cloneable {
     */
    public void displayToConsole() {
       for (int i = 0; i < MAX_HEIGHT; i++) {
-         for (int j = 0; j < MAX_WIDTH; j++) {
-            if (image_data[i][j]) {
-               System.out.print("*");
-            } else {
-               System.out.print(" ");
-            }
+         if (image_data[i][0]) {
+	    	 for (int j = 0; j < MAX_WIDTH; j++) {
+	            if (image_data[i][j]) {
+	               System.out.print("*");
+	            } else {
+	               System.out.print(" ");
+	            }
+	         }
+	         System.out.println();
          }
-         System.out.println();
       }
    }
    
