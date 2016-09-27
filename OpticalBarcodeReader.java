@@ -23,8 +23,6 @@ public class OpticalBarcodeReader {
             "***************************************** "  
          };      
                
-            
-         
          String[] sImageIn_2 = {
                "                                          ",
                "                                          ",
@@ -64,19 +62,19 @@ public class OpticalBarcodeReader {
         
          // First secret message
          System.out.println("----------------------------------------------");
-         /*dm.translateImageToText();
+         dm.translateImageToText();
          dm.displayTextToConsole();
-         dm.displayImageToConsole();*/
+         dm.displayImageToConsole();
          System.out.println("----------------------------------------------");
          
          // second secret message
-         /*
+         
          bc = new BarcodeImage(sImageIn_2);
          dm.scan(bc);
          dm.translateImageToText();
          dm.displayTextToConsole();
          dm.displayImageToConsole();
-         */
+         
          dm.readText("Hello world!");
          dm.generateImageFromText();
          dm.displayTextToConsole();
@@ -91,10 +89,10 @@ public class OpticalBarcodeReader {
          
          
          // create your own message
-         /*dm.readText("What a great resume builder this is!");
+         dm.readText("What a great resume builder this is!");
          dm.generateImageFromText();
          dm.displayTextToConsole();
-         dm.displayImageToConsole();*/
+         dm.displayImageToConsole();
          
    }
 }
@@ -311,8 +309,9 @@ class DataMatrix implements BarcodeIO {
          return false;
       } else {      
          this.image = image.clone();
-         actualWidth = 35; // TODO: Get from computeSignalWidth(), this is temp value for testing
-         actualHeight = 10; // TODO: Get from computeSignalHeight(), this is temp value for testing
+         cleanImage();
+         actualWidth = computeSignalWidth(); 
+         actualHeight = computeSignalHeight();
          return true;
       }
    }
@@ -354,9 +353,8 @@ class DataMatrix implements BarcodeIO {
          // addBorders args: topRow, bottomRow, leftCol, rightCol
          addBorders(bottomRow - maxBinaryLength - 1, bottomRow, 0, chars.length + 1);
          
-         // TODO: Update internal image dimensions
-         //actualWidth = computeSignalHeight();
-         //actualHeight = computeSignalHeight();
+         actualWidth = computeSignalHeight();
+         actualHeight = computeSignalHeight();
    
          return true;
          
@@ -455,15 +453,49 @@ class DataMatrix implements BarcodeIO {
    }
    
    private int computeSignalWidth() {
-      return 0; // TODO fix
+      int signalWidth = 0;
+      for (int i = 0; i < BarcodeImage.MAX_WIDTH; i++) {
+    	  if (image.getPixel(BarcodeImage.MAX_HEIGHT-1, i)) {
+    		  signalWidth++;
+    	  }
+      }
+      return signalWidth;
    }
    
    private int computeSignalHeight() {
-      return 0; // TODO fix
+	   int signalHeight = 0;
+	   for (int i = 0; i < BarcodeImage.MAX_HEIGHT; i++) {
+		   if (image.getPixel(i, 0) == true) {
+			   signalHeight++;
+		   }
+	   }
+	   
+	   return signalHeight;
    }
    
    private void cleanImage() {
-      // TODO
+      int start_row = BarcodeImage.MAX_HEIGHT - 1;
+      int start_col = 0;
+      boolean found = false;
+      
+      for (int row = start_row; row >= 0; row--) {
+    	  for (int col = 0; col < BarcodeImage.MAX_WIDTH; col++) {
+    		  if (image.getPixel(row,col) == true && found == false) {
+    			  start_row = row;
+    			  start_col = col;
+    			  found = true;
+    		  }
+    	  }
+      }
+      
+      for (int i = 0; i < BarcodeImage.MAX_HEIGHT; i++) {
+    	  for (int j = 0; j < BarcodeImage.MAX_WIDTH; j++) {
+    		  if ((start_row - i >= 0) && (start_col + j < BarcodeImage.MAX_WIDTH)) {
+    			  boolean tmpVal = image.getPixel(start_row - i, start_col + j);
+    			  image.setPixel(BarcodeImage.MAX_HEIGHT-1-i, j, tmpVal);
+    		  }
+    	  }
+      }
    }
    
    /**
@@ -476,7 +508,4 @@ class DataMatrix implements BarcodeIO {
          }
       }
    }
-   
-   
-   
 }
